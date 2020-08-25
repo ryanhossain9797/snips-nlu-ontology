@@ -3,7 +3,6 @@ use crate::errors::*;
 use crate::ontology::*;
 use failure::format_err;
 use serde::Deserialize;
-use serde_json;
 use std::ops::Range;
 
 #[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]

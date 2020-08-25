@@ -1,6 +1,5 @@
 use ffi_utils::CStringArray;
 use lazy_static::lazy_static;
-use libc;
 use snips_nlu_ontology::Language;
 use std::ffi::CString;
 

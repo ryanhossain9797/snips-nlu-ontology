@@ -31,7 +31,7 @@ macro_rules! export_nlu_ontology_c_symbols {
         }
 
         #[no_mangle]
-        pub extern "C" fn snips_nlu_ontology_entity_shortname(
+        pub unsafe extern "C" fn snips_nlu_ontology_entity_shortname(
             entity_name: *const libc::c_char,
             result: *mut *const libc::c_char,
         ) -> ::ffi_utils::SNIPS_RESULT {

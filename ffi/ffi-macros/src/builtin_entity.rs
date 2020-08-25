@@ -137,6 +137,7 @@ pub fn all_gazetteer_entities() -> CStringArray {
     }
 }
 
+///# Safety
 pub fn get_builtin_entity_shortname(
     entity_name: *const libc::c_char,
     result: *mut *const libc::c_char,

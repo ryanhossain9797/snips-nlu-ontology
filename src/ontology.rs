@@ -185,7 +185,6 @@ pub enum Precision {
 
 #[cfg(test)]
 mod tests {
-    use serde_json;
 
     use super::*;
 

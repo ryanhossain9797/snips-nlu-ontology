@@ -5,7 +5,6 @@ use ffi_utils::{
     create_optional_rust_string_from, create_rust_string_from, take_back_c_string,
     take_back_nullable_c_string, AsRust, RawPointerConverter,
 };
-use libc;
 use snips_nlu_ontology::*;
 use std::ffi::CString;
 use std::ptr::null;
@@ -160,7 +159,7 @@ impl From<IntentClassifierResult> for CIntentClassifierResult {
         let intent_name = input
             .intent_name
             .map(|name| CString::new(name).unwrap().into_raw() as *const _)
-            .unwrap_or_else(|| null());
+            .unwrap_or_else(null);
         Self {
             intent_name,
             confidence_score: input.confidence_score,
@@ -391,26 +390,24 @@ pub enum SNIPS_SLOT_VALUE_TYPE {
 
 impl<'a> From<&'a SlotValue> for SNIPS_SLOT_VALUE_TYPE {
     fn from(slot_value: &SlotValue) -> Self {
-        match slot_value {
-            &crate::SlotValue::Custom(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_CUSTOM,
-            &SlotValue::Number(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_NUMBER,
-            &SlotValue::Ordinal(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_ORDINAL,
-            &SlotValue::InstantTime(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_INSTANTTIME,
-            &SlotValue::TimeInterval(_) => {
-                SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_TIMEINTERVAL
-            }
-            &SlotValue::AmountOfMoney(_) => {
+        match *slot_value {
+            crate::SlotValue::Custom(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_CUSTOM,
+            SlotValue::Number(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_NUMBER,
+            SlotValue::Ordinal(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_ORDINAL,
+            SlotValue::InstantTime(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_INSTANTTIME,
+            SlotValue::TimeInterval(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_TIMEINTERVAL,
+            SlotValue::AmountOfMoney(_) => {
                 SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_AMOUNTOFMONEY
             }
-            &SlotValue::Temperature(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_TEMPERATURE,
-            &SlotValue::Duration(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_DURATION,
-            &SlotValue::Percentage(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_PERCENTAGE,
-            &SlotValue::MusicAlbum(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_MUSICALBUM,
-            &SlotValue::MusicArtist(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_MUSICARTIST,
-            &SlotValue::MusicTrack(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_MUSICTRACK,
-            &SlotValue::City(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_CITY,
-            &SlotValue::Country(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_COUNTRY,
-            &SlotValue::Region(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_REGION,
+            SlotValue::Temperature(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_TEMPERATURE,
+            SlotValue::Duration(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_DURATION,
+            SlotValue::Percentage(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_PERCENTAGE,
+            SlotValue::MusicAlbum(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_MUSICALBUM,
+            SlotValue::MusicArtist(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_MUSICARTIST,
+            SlotValue::MusicTrack(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_MUSICTRACK,
+            SlotValue::City(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_CITY,
+            SlotValue::Country(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_COUNTRY,
+            SlotValue::Region(_) => SNIPS_SLOT_VALUE_TYPE::SNIPS_SLOT_VALUE_TYPE_REGION,
         }
     }
 }
